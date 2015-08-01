@@ -9,8 +9,35 @@
     tools:context=".MainActivity">
 
     <TextView
+        android:id="@+id/lbResult"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+        android:layout_centerHorizontal="true"
+        android:text="Result"/>
+
+
+    <TextView
+        android:id="@+id/tvResult"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lbResult"
+        android:layout_centerHorizontal="true"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Display1"/>
+
+    <Button
+        android:id="@+id/btExecuteSuccess"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btExecuteError"
+        android:layout_centerHorizontal="true"
+        android:text="Execute Success"/>
+
+    <Button
+        android:id="@+id/btExecuteError"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="Execute Error"/>
 
 </RelativeLayout>
