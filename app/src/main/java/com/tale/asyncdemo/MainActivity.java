@@ -18,7 +18,6 @@ public class MainActivity extends AppCompatActivity {
 
     TextView tvResult;
     TextView lbResult;
-    Async<String, String> async;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +41,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        async = Async.<String, String>newInstance(new Task() {
+    }
+
+    private void executeSuccess() {
+        showLoading();
+        Async.<String, String>newInstance(new Task() {
             @Override
             public Result call(Object... params) {
                 SystemClock.sleep(2000);
@@ -54,6 +57,23 @@ public class MainActivity extends AppCompatActivity {
             public void call(String s) {
                 tvResult.setText(s);
             }
+        }).onComplete(new Action0() {
+            @Override
+            public void call() {
+                hideLoading();
+            }
+        }).executeOnThreadPool("Successful!");
+    }
+
+    private void executeError() {
+        showLoading();
+        Async.<String, String>newInstance(new Task() {
+            @Override
+            public Result call(Object... params) {
+                SystemClock.sleep(2000);
+                final String param = (String) params[0];
+                return error(param);
+            }
         }).onError(new Action1<String>() {
             @Override
             public void call(String s) {
@@ -64,17 +84,7 @@ public class MainActivity extends AppCompatActivity {
             public void call() {
                 hideLoading();
             }
-        });
-    }
-
-    private void executeSuccess() {
-        showLoading();
-        async.executeOnThreadPool("Successful!");
-    }
-
-    private void executeError() {
-        showLoading();
-        async.executeOnThreadPool("Error!");
+        }).executeOnThreadPool("Error!");
     }
 
     private void showLoading() {
